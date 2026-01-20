@@ -66,18 +66,20 @@ router.post('/search', async (req, res) => {
         taskDescription += `5. If CLEAN (not applied), open the job details.\n`;
         taskDescription += `6. MATCHING PROCESS:\n`;
         taskDescription += `   a) First, check if the job TITLE matches the target role: "${preferences.role}"\n`;
-        taskDescription += `   b) Then, check if the SKILLSET matches: ${preferences.skills.join(', ')}\n`;
-        taskDescription += `   c) If BOTH title and skills match perfectly (90%+), immediately accept this job and stop searching.\n`;
-        taskDescription += `   d) Only if title/skills don't match well enough, then check other requirements like experience and location.\n`;
+        taskDescription += `   b) Check initial SKILLSET display: ${preferences.skills.join(', ')}\n`;
+        taskDescription += `   c) EXPAND the job description by clicking "See more", "Read more", or similar buttons to view the full "About the job" section\n`;
+        taskDescription += `   d) Check SKILLSET in the expanded "About the job" section as well\n`;
+        taskDescription += `   e) If BOTH title and skills match perfectly (90%+) in either initial or expanded view, immediately accept this job and stop searching.\n`;
+        taskDescription += `   f) Only if title/skills don't match well enough, then check other requirements like experience and location.\n`;
         taskDescription += `7. If it's a PERFECT MATCH, STOP the search and present the job to the user for manual application.\n`;
         taskDescription += `8. Do NOT automatically apply or submit applications. Let the user decide.\n`;
 
         console.log('Starting MobileRun task:', taskDescription);
 
         const response = await client.tasks.run({
-            llmModel: 'google/gemini-2.5-flash',
+            llmModel: 'google/gemini-3-flash',
             task: taskDescription,
-            deviceId: '',//Add your deviceId
+            deviceId: 'df6b5ba5-2d80-4e8b-a197-afdfcff361ab',//Add your deviceId
         });
 
         console.log('MobileRun Task Started:', response.id);
